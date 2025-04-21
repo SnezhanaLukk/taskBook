@@ -31,11 +31,10 @@ class TaskListItem extends Component {
         const { taskName, date } = this.props;
         const { priority, isTaskComplete } = this.state;
         const deadline = date ? date : getTodayDateString();
-        let flagClass = "fa-solid fa-font-awesome";
-        if (isTaskComplete) {
-            flagClass += " done"
-        }
         let classNames = "list-group-item d-flex justify-content-between";
+        if (isTaskComplete) {
+            classNames += " done"
+        }
         if (priority) {
             classNames += " priority"
         }
@@ -44,9 +43,8 @@ class TaskListItem extends Component {
                 <span onClick={this.onPriority} className="list-group-item-label">{taskName}</span>
                 <input type="date" className="list-group-item-input" defaultValue={deadline} />
                 <div className="d-flex justify-content-center align-items-center">
-                    <button onClick={this.onIsTaskComplite} type="button"
-                        className="btn-flag btn-sm ">
-                        <i className={flagClass}></i>
+                    <button onClick={this.onIsTaskComplite} type="button" className="btn-flag btn-sm ">
+                        <i className="fa-solid fa-font-awesome"></i>
                     </button>
 
                     <button type="button"

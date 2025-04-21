@@ -35,7 +35,7 @@
     color: #f48183;
 }
 
-.list-group-item .btn-flag .done {
+.list-group-item.done .btn-flag {
     color: #91f98f;
 }
 
