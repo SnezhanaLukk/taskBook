@@ -14,6 +14,16 @@ class TaskAddForm extends Component {
             [e.target.name]: e.target.value
         })
     }
+    onSubmit = (e) => {
+        e.preventDefault();
+        if (this.state.task.length > 2) {
+            this.props.addTask(this.state.task, this.state.deadline)
+            this.setState({
+                task: '',
+                deadline: ''
+            })
+        }
+    }
     render() {
         const { task, deadline } = this.state;
         return (
@@ -34,7 +44,7 @@ class TaskAddForm extends Component {
                         type="date"
                         className='form-control nem-post-label'
                         placeholder='Дедлайн' />
-                    <button type='submit' className='btn btn-outline-light'>Добавить</button>
+                    <button onClick={this.onSubmit} type='submit' className='btn btn-outline-light'>Добавить</button>
                 </form>
 
             </div>

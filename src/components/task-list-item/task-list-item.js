@@ -28,7 +28,7 @@ class TaskListItem extends Component {
         }))
     }
     render() {
-        const { taskName, date } = this.props;
+        const { taskName, date, onDelete } = this.props;
         const { priority, isTaskComplete } = this.state;
         const deadline = date ? date : getTodayDateString();
         let classNames = "list-group-item d-flex justify-content-between";
@@ -48,7 +48,8 @@ class TaskListItem extends Component {
                     </button>
 
                     <button type="button"
-                        className="btn-trash btn-sm ">
+                        className="btn-trash btn-sm "
+                        onClick={onDelete}>
                         <i className="fas fa-trash"></i>
                     </button>
                     <i className="fas fa-star"></i>
