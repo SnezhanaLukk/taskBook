@@ -1,11 +1,12 @@
 import './app-info.css';
 
-const AppInfo = () => {
+const AppInfo = (props) => {
     return (
         <div className="app-info">
-            <h1>Задачник. Учёт задач</h1>
-            <h2>Общее количество дел: </h2>
-            <h2>Выполнено: </h2>
+            <h1>Задачник</h1>
+            <h2>Общее количество задач: {props.taskQuantity}</h2>
+            <h3>Выполнено: {props.completedTaskNumber}</h3>
+            <h3>Важных: {props.importantTask}</h3>
         </div>
     )
 }

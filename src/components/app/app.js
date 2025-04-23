@@ -53,19 +53,8 @@ class App extends Component {
                 return item
             })
         }))
-        // console.log(`priority this ${id}`)
     }
     onToggleIsTaskComplete = (id) => {
-        // this.setState(({ taskList }) => {
-        //     const index = taskList.findIndex(item => item.id === id);
-        //     const old = taskList[index];
-        //     const newItem = { ...old, isTaskComplete: !old.isTaskComplete };
-        //     const newArray = [...taskList.slice(0, index), newItem, ...taskList.slice(index + 1)]
-        //     return {
-        //         data: newArray
-        //     }
-        // })
-        // console.log(`isTaskComplete this ${id}`)
         this.setState(({ taskList }) => ({
             taskList: taskList.map(item => {
                 if (item.id === id) {
@@ -78,7 +67,10 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <AppInfo />
+                <AppInfo
+                    taskQuantity={this.state.taskList.length}
+                    completedTaskNumber={this.state.taskList.filter(item => item.isTaskComplete === true).length}
+                    importantTask={this.state.taskList.filter(item => item.priority === true).length} />
 
                 <div className='search-panel'>
                     <SearchPanel />
