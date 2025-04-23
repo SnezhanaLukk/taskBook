@@ -2,7 +2,7 @@ import TaskListItem from "../task-list-item/task-list-item";
 
 import './task-list.css'
 
-const TaskList = ({ taskList, onDelete }) => {
+const TaskList = ({ taskList, onDelete, onTogglePriority, onToggleIsTaskComplete }) => {
 
     const elements = taskList.map(item => {
         const { id, ...taskItem } = item;
@@ -10,7 +10,9 @@ const TaskList = ({ taskList, onDelete }) => {
             <TaskListItem
                 key={id}
                 {...taskItem}
-                onDelete={() => onDelete(id)} />
+                onDelete={() => onDelete(id)}
+                onTogglePriority={() => onTogglePriority(id)}
+                onToggleIsTaskComplete={() => onToggleIsTaskComplete(id)} />
         )
     })
     return (

@@ -1,11 +1,12 @@
 import { Component } from 'react';
-import './app.css';
+
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import TaskList from '../task-list/task-list';
 import TaskAddForm from '../task-add-form/task-add-form';
 
+import './app.css';
 
 class App extends Component {
     constructor(props) {
@@ -43,6 +44,37 @@ class App extends Component {
             }
         })
     }
+    onTogglePriority = (id) => {
+        this.setState(({ taskList }) => ({
+            taskList: taskList.map(item => {
+                if (item.id === id) {
+                    return { ...item, priority: !item.priority }
+                }
+                return item
+            })
+        }))
+        // console.log(`priority this ${id}`)
+    }
+    onToggleIsTaskComplete = (id) => {
+        // this.setState(({ taskList }) => {
+        //     const index = taskList.findIndex(item => item.id === id);
+        //     const old = taskList[index];
+        //     const newItem = { ...old, isTaskComplete: !old.isTaskComplete };
+        //     const newArray = [...taskList.slice(0, index), newItem, ...taskList.slice(index + 1)]
+        //     return {
+        //         data: newArray
+        //     }
+        // })
+        // console.log(`isTaskComplete this ${id}`)
+        this.setState(({ taskList }) => ({
+            taskList: taskList.map(item => {
+                if (item.id === id) {
+                    return { ...item, isTaskComplete: !item.isTaskComplete }
+                }
+                return item;
+            })
+        }))
+    }
     render() {
         return (
             <div className="app">
@@ -54,7 +86,9 @@ class App extends Component {
                 </div>
                 <TaskList
                     taskList={this.state.taskList}
-                    onDelete={this.deleteItem} />
+                    onDelete={this.deleteItem}
+                    onTogglePriority={this.onTogglePriority}
+                    onToggleIsTaskComplete={this.onToggleIsTaskComplete} />
                 <TaskAddForm addTask={this.addItem} />
             </div>
         )
