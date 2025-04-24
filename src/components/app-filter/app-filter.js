@@ -1,33 +1,31 @@
 import './app-filter.css'
 
-const AppFilter = () => {
+const AppFilter = (props, onFilterPost) => {
+
+    const buttonsData = [
+        { name: 'all', label: 'Все задачи' },
+        { name: 'priority', label: 'Важные' },
+        { name: 'isTaskComplete', label: 'Выполнены' },
+        { name: 'isNotTaskComplete', label: 'Не выполнены' },
+        { name: 'deadline', label: 'Сортировка по дате' }
+    ]
+
+    const buttons = buttonsData.map(({ name, label }) => {
+        const active = props.filter === name;
+        const clazz = active ? 'btn-light' : 'btn-outline-light';
+        return (
+            <button type='button'
+                className={`btn ${clazz}`}
+                key={name}
+                onClick={() => props.onFilterPost(name)}>
+                {label}
+            </button>
+        )
+    })
+
     return (
         <div className='btn-group app-filter'>
-            <button
-                type='button'
-                className="btn btn-light">
-                Все задачи
-            </button>
-            <button
-                type='button'
-                className="btn btn-outline-light">
-                Выполнены
-            </button>
-            <button
-                type='button'
-                className="btn btn-outline-light">
-                Не выполнены
-            </button>
-            <button
-                type='button'
-                className="btn btn-outline-light">
-                Важные
-            </button>
-            <button
-                type='button'
-                className="btn btn-outline-light">
-                Срочные
-            </button>
+            {buttons}
         </div>
     )
 }

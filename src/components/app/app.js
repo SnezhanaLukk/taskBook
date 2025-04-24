@@ -18,7 +18,8 @@ class App extends Component {
                 { taskName: 'Выбросить мусор', date: '2025-04-23', priority: true, isTaskComplete: false, id: 3 },
                 { taskName: 'Приготовить ужин', date: '2025-05-17', priority: true, isTaskComplete: true, id: 4 },
             ],
-
+            textSearch: '',
+            filter: 'all'
         }
         this.maxId = 5;
     }
@@ -64,20 +65,56 @@ class App extends Component {
             })
         }))
     }
+
+    searchTask = (tasks, text) => {
+        if (text.length === 0) {
+            return tasks;
+        }
+
+        return tasks.filter(task => {
+            return task.taskName.indexOf(text) > -1
+        })
+    }
+
+    onUpdateSearch = (textSearch) => {
+        this.setState({ textSearch }); //({textSearch: textSearch}) === ({textSearch})
+    }
+
+    filterPost = (items, filter) => {
+        switch (filter) {
+            case 'priority':
+                return items.filter(item => item.priority);
+            case 'deadline':
+                return items.sort((a, b) => new Date(a.date) - new Date(b.date));
+            case 'isTaskComplete':
+                return items.filter(item => item.isTaskComplete);
+            case 'isNotTaskComplete':
+                return items.filter(item => !item.isTaskComplete);
+            default:
+                return items;
+        }
+    }
+    onFilterPost = (filter) => {
+        this.setState({ filter });
+    }
+
     render() {
+        const { taskList, textSearch, filter } = this.state;
+        // const visibleTask = this.searchTask(taskList, textSearch);
+        const visibleTask = this.filterPost(this.searchTask(taskList, textSearch), filter);
         return (
             <div className="app">
                 <AppInfo
-                    taskQuantity={this.state.taskList.length}
-                    completedTaskNumber={this.state.taskList.filter(item => item.isTaskComplete === true).length}
-                    importantTask={this.state.taskList.filter(item => item.priority === true).length} />
+                    taskQuantity={taskList.length}
+                    completedTaskNumber={taskList.filter(item => item.isTaskComplete === true).length}
+                    importantTask={taskList.filter(item => item.priority === true).length} />
 
                 <div className='search-panel'>
-                    <SearchPanel />
-                    <AppFilter />
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+                    <AppFilter filter={filter} onFilterPost={this.onFilterPost} />
                 </div>
                 <TaskList
-                    taskList={this.state.taskList}
+                    taskList={visibleTask}
                     onDelete={this.deleteItem}
                     onTogglePriority={this.onTogglePriority}
                     onToggleIsTaskComplete={this.onToggleIsTaskComplete} />
